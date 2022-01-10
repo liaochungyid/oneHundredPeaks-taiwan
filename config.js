@@ -4,13 +4,15 @@ const env = {}
 env.staging = {
   'httpPort': 3000,
   'httpsPort': 3001,
-  'envName': 'staging'
+  'envName': 'staging',
+  'hashSecret': 'thisIsASecret'
 }
 
 env.production = {
   'httpPort': 80,
   'httpsPort': 443,
-  'envName': 'production'
+  'envName': 'production',
+  'hashSecret': 'thisIsASecretAsWell'
 }
 
 // determine which environment to use

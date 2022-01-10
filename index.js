@@ -4,9 +4,10 @@ const https = require('https')
 const fs = require('fs')
 const { URL, URLSearchParams } = require('url')
 const { StringDecoder } = require('string_decoder')
+const handlers = require('./lib/routeHandler')
 const sanityCheck = require('./lib/sanityCheck')
 const config = require('./config.js')
-const fileCRUD = require('./lib/fileCRUD')
+const helpers = require('./lib/helpers')
 
 // http server responses to all request
 const httpServer = http.createServer(function(req,res) {
@@ -68,7 +69,7 @@ const unifiedServer = function(req, res){
       headers,
       method,
       queryStringObject,
-      'payload': buffer
+      'payload': helpers.parseJsonToObject(buffer)
     }
 
     // route the request to the specified handler
@@ -103,20 +104,8 @@ const unifiedServer = function(req, res){
 
 }
 
-// define the handler
-const handlers = {}
-
-// ping handler
-handlers.ping = function(data, cb) {
-  cb(200)
-}
-
-// not found handler
-handlers.notFound = function(data, cb) {
-  cb(404)
-}
-
 // define request routers
 const router = {
-  'ping': handlers.ping
+  'ping': handlers.ping,
+  'claim': handlers.claims 
 }
