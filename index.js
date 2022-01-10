@@ -3,6 +3,7 @@ const http = require('http')
 const { URL, URLSearchParams } = require('url')
 const { StringDecoder } = require('string_decoder')
 const sanityCheck = require('./lib/sanityChack')
+const config = require('./config.js')
 
 // server responses to all request
 const server = http.createServer(function(req,res) {
@@ -54,6 +55,7 @@ const server = http.createServer(function(req,res) {
       const payloadString = JSON.stringify(payload)
 
       // return the response
+      res.setHeader('Content-Type','application/json')
       res.writeHead(statusCode)
       res.end(payloadString)
 
@@ -72,8 +74,9 @@ const server = http.createServer(function(req,res) {
 
 })
 
-server.listen(3000, '127.0.0.1', function() {
-  console.log('The server is listening on port 3000 now')
+// start the server
+server.listen(config.port, function() {
+  console.log(`The server is listening on port ${config.port} in ${config.envName} mode`)
 })
 
 // define the handler
