@@ -10,7 +10,8 @@ const fileCRUD = require('./lib/fileCRUD')
 
 // TESTING
 // @TODO delete it after testing
-fileCRUD.create('test','testFile',{'foo':'bar'},function(err){console.log('Error in fileCRUD: ', err)})
+fileCRUD.read('test','testFile',function(err,data){console.log('Error in fileCRUD: ', err)
+console.log('data: ', data)})
 
 // http server responses to all request
 const httpServer = http.createServer(function(req,res) {
