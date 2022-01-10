@@ -1,0 +1,14 @@
+{
+  "name": "onehundredpeaks-taiwan",
+  "version": "1.0.0",
+  "description": "One hundred peaks in Taiwan",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "LCY",
+  "license": "ISC"
+}
