@@ -2,6 +2,7 @@
 const http = require('http')
 const { URL, URLSearchParams } = require('url')
 const { StringDecoder } = require('string_decoder')
+const sanityCheck = require('./lib/sanityChack')
 
 // server responses to all request
 const server = http.createServer(function(req,res) {
@@ -30,15 +31,43 @@ const server = http.createServer(function(req,res) {
   req.on('end', function(){
     buffer += decoder.end()
 
-    // send the response
-    res.end('<h1>Hello world!</h1>')
+    // choose the handle request should go to, if not found, use notFound handler
+    const reqHandler = typeof(router[path]) !== 'undefined' ? router[path] : handlers.notFound
 
-    // log the request
-    console.log('headers: ',headers)
-    console.log('method: ', method)
-    console.log('path: ', path)
-    console.log('queryStringObject: ', queryStringObject)
-    console.log('buffer: ', buffer)
+    // construct the data object to send to handler
+    const data = {
+      headers,
+      method,
+      queryStringObject,
+      'payload': buffer
+    }
+
+    // route the request to the specified handler
+    reqHandler(data, function(statusCode, payload) {
+      // use status code called back by the handler, or default to 200
+      statusCode = sanityCheck.number(statusCode, 200)
+
+      // use the payload called back by the handler, or default to empty object
+      payload = sanityCheck.object(payload, {})
+
+      // convert the payload to a string
+      const payloadString = JSON.stringify(payload)
+
+      // return the response
+      res.writeHead(statusCode)
+      res.end(payloadString)
+
+      // log the request
+      // @TODO delete it after checking
+      console.log('request data: ',data)
+
+      // log the response
+      // @TODO delete it after checking
+      console.log('return statusCode: ', statusCode)
+      console.log('return payloadString: ', payloadString)
+
+    })
+
   })
 
 })
@@ -46,3 +75,22 @@ const server = http.createServer(function(req,res) {
 server.listen(3000, '127.0.0.1', function() {
   console.log('The server is listening on port 3000 now')
 })
+
+// define the handler
+const handlers = {}
+
+// sample handler
+handlers.sample = function(data, cb) {
+  // callback a http status code, and a payload object
+  cb(200, {'foo': 'buzz - sample handler'})
+}
+
+// not found handler
+handlers.notFound = function(data, cb) {
+  cb(404)
+}
+
+// define request routers
+const router = {
+  'sample': handlers.sample
+}
