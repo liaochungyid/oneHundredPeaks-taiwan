@@ -8,10 +8,6 @@ const sanityCheck = require('./lib/sanityCheck')
 const config = require('./config.js')
 const fileCRUD = require('./lib/fileCRUD')
 
-// TESTING
-// @TODO delete it after testing
-fileCRUD.update('test','testFile',{'Hello':'world'},function(err){console.log('error: ', err)})
-
 // http server responses to all request
 const httpServer = http.createServer(function(req,res) {
   unifiedServer(req,res)
