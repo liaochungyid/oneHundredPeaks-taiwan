@@ -4,7 +4,7 @@ const https = require('https')
 const fs = require('fs')
 const { URL, URLSearchParams } = require('url')
 const { StringDecoder } = require('string_decoder')
-const sanityCheck = require('./lib/sanityChack')
+const sanityCheck = require('./lib/sanityCheck')
 const config = require('./config.js')
 
 // http server responses to all request
@@ -94,6 +94,7 @@ const unifiedServer = function(req, res){
       // @TODO delete it after checking
       console.log('return statusCode: ', statusCode)
       console.log('return payloadString: ', payloadString)
+      console.log('= = = = = = = = = = = = =')
 
     })
 
@@ -104,10 +105,9 @@ const unifiedServer = function(req, res){
 // define the handler
 const handlers = {}
 
-// sample handler
-handlers.sample = function(data, cb) {
-  // callback a http status code, and a payload object
-  cb(200, {'foo': 'buzz - sample handler'})
+// ping handler
+handlers.ping = function(data, cb) {
+  cb(200)
 }
 
 // not found handler
@@ -117,5 +117,5 @@ handlers.notFound = function(data, cb) {
 
 // define request routers
 const router = {
-  'sample': handlers.sample
+  'ping': handlers.ping
 }
