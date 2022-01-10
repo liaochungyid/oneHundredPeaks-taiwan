@@ -2,12 +2,14 @@
 const env = {}
 
 env.staging = {
-  'port': 3000,
+  'httpPort': 3000,
+  'httpsPort': 3001,
   'envName': 'staging'
 }
 
 env.production = {
-  'port': 3001,
+  'httpPort': 80,
+  'httpsPort': 443,
   'envName': 'production'
 }
 

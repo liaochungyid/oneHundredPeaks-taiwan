@@ -1,14 +1,41 @@
 // Dependencies
 const http = require('http')
+const https = require('https')
+const fs = require('fs')
 const { URL, URLSearchParams } = require('url')
 const { StringDecoder } = require('string_decoder')
 const sanityCheck = require('./lib/sanityChack')
 const config = require('./config.js')
 
-// server responses to all request
-const server = http.createServer(function(req,res) {
+// http server responses to all request
+const httpServer = http.createServer(function(req,res) {
+  unifiedServer(req,res)
+})
 
-    // get the headers as an object
+// https server responses to all request
+const httpsServerOption = {
+  'key': fs.readFileSync('./https/key.pem'),
+  'cert': fs.readFileSync('./https/cert.pem')
+}
+const httpsServer = https.createServer(httpsServerOption, function(req,res) {
+  unifiedServer(req,res)
+})
+
+// start http server
+httpServer.listen(config.httpPort, function() {
+  console.log(`The http server is listening on port ${config.httpPort} in ${config.envName} mode`)
+})
+
+// start https server
+httpsServer.listen(config.httpsPort, function() {
+  console.log(`The https server is listening on port ${config.httpsPort} in ${config.envName} mode`)
+})
+
+
+// all server logic for both http and https server
+const unifiedServer = function(req, res){
+
+  // get the headers as an object
   const headers = req.headers
 
   // get the HTTP Method
@@ -72,12 +99,7 @@ const server = http.createServer(function(req,res) {
 
   })
 
-})
-
-// start the server
-server.listen(config.port, function() {
-  console.log(`The server is listening on port ${config.port} in ${config.envName} mode`)
-})
+}
 
 // define the handler
 const handlers = {}
