@@ -6,6 +6,11 @@ const { URL, URLSearchParams } = require('url')
 const { StringDecoder } = require('string_decoder')
 const sanityCheck = require('./lib/sanityCheck')
 const config = require('./config.js')
+const fileCRUD = require('./lib/fileCRUD')
+
+// TESTING
+// @TODO delete it after testing
+fileCRUD.create('test','testFile',{'foo':'bar'},function(err){console.log('Error in fileCRUD: ', err)})
 
 // http server responses to all request
 const httpServer = http.createServer(function(req,res) {
