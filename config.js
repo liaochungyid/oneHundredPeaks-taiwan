@@ -5,14 +5,22 @@ env.staging = {
   'httpPort': 3000,
   'httpsPort': 3001,
   'envName': 'staging',
-  'hashSecret': 'thisIsASecret'
+  'hashSecret': 'thisIsASecret',
+  'templateGlobals': {
+    'appName': 'A Hundred Peaks',
+    'baseUrl': 'http://localhost:3000'
+  }
 }
 
 env.production = {
   'httpPort': 80,
   'httpsPort': 443,
   'envName': 'production',
-  'hashSecret': 'thisIsASecretAsWell'
+  'hashSecret': 'thisIsASecretAsWell',
+  'templateGlobals': {
+    'appName': 'A Hundred Peaks',
+    'baseUrl': 'http://localhost:80'
+  }
 }
 
 // determine which environment to use
