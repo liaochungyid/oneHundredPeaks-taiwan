@@ -73,18 +73,31 @@ const unifiedServer = function(req, res){
     }
 
     // route the request to the specified handler
-    reqHandler(data, function(statusCode, payload) {
+    reqHandler(data, function(statusCode, payload, contentType) {
+      // determine the type of response (default: JSON)
+      contentType = sanityCheck.string(contentType, 'json')
+
       // use status code called back by the handler, or default to 200
       statusCode = sanityCheck.number(statusCode, 200)
 
-      // use the payload called back by the handler, or default to empty object
-      payload = sanityCheck.object(payload, {})
+      
 
-      // convert the payload to a string
-      const payloadString = JSON.stringify(payload)
+      // return the response-parts that are content-specific
+      let payloadString = ''
+      if (contentType === 'json') {
+        res.setHeader('Content-Type','application/json')
+        // use the payload called back by the handler, or default to empty object
+        payload = sanityCheck.object(payload, {})
+        // convert the payload to a string
+        payloadString = JSON.stringify(payload)
+      }
 
-      // return the response
-      res.setHeader('Content-Type','application/json')
+      if (contentType === 'html') {
+        res.setHeader('Content-Type','text/html')
+        payloadString = sanityCheck.string(payload, '')
+      }
+
+      // return the response-parts that are common to all content-types
       res.writeHead(statusCode)
       res.end(payloadString)
 
@@ -106,6 +119,13 @@ const unifiedServer = function(req, res){
 
 // define request routers
 const router = {
+  '': handlers.index,
+  'claim/create': handlers.postClaim,
+  'claim/edit': handlers.putClaim,
+  'claim/delete': handlers.deleteClaim,
+  'session/create': handlers.createSession,
+  'session/delete' : handlers.deleteSession,
+  'claim/all': handlers.claimList,
   'ping': handlers.ping,
-  'claim': handlers.claims 
+  'api/claim': handlers.claims
 }
