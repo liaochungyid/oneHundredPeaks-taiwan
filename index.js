@@ -62,10 +62,14 @@ const unifiedServer = function(req, res){
     buffer += decoder.end()
 
     // choose the handle request should go to, if not found, use notFound handler
-    const reqHandler = typeof(router[path]) !== 'undefined' ? router[path] : handlers.notFound
+    let reqHandler = typeof(router[path]) !== 'undefined' ? router[path] : handlers.notFound
+
+    // if the path contains public/ , use the public handler
+    reqHandler = path.indexOf('public/') > -1 ? handlers.public : reqHandler 
 
     // construct the data object to send to handler
     const data = {
+      path,
       headers,
       method,
       queryStringObject,
@@ -79,8 +83,6 @@ const unifiedServer = function(req, res){
 
       // use status code called back by the handler, or default to 200
       statusCode = sanityCheck.number(statusCode, 200)
-
-      
 
       // return the response-parts that are content-specific
       let payloadString = ''
@@ -97,13 +99,38 @@ const unifiedServer = function(req, res){
         payloadString = sanityCheck.string(payload, '')
       }
 
+      if (contentType === 'favicon') {
+        res.setHeader('Content-Type','image/x-icon')
+        payloadString = sanityCheck.notFalsy(payload)
+      }
+
+      if (contentType === 'css') {
+        res.setHeader('Content-Type','text/css')
+        payloadString = sanityCheck.notFalsy(payload)
+      }
+
+      if (contentType === 'png') {
+        res.setHeader('Content-Type','image/png')
+        payloadString = sanityCheck.notFalsy(payload)
+      }
+
+      if (contentType === 'jpg') {
+        res.setHeader('Content-Type','image/jpeg')
+        payloadString = sanityCheck.notFalsy(payload)
+      }
+
+      if (contentType === 'plain') {
+        res.setHeader('Content-Type','text/plain')
+        payloadString = sanityCheck.notFalsy(payload)
+      }
+
       // return the response-parts that are common to all content-types
       res.writeHead(statusCode)
       res.end(payloadString)
 
       // log the request
       // @TODO delete it after checking
-      console.log('request data: ',data)
+      // console.log('request data: ',data)
 
       // log the response
       // @TODO delete it after checking
@@ -127,5 +154,6 @@ const router = {
   'session/delete' : handlers.deleteSession,
   'claim/all': handlers.claimList,
   'ping': handlers.ping,
-  'api/claim': handlers.claims
+  'api/claim': handlers.claims,
+  'favicon.ico': handlers.favicon
 }

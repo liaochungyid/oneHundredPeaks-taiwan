@@ -9,7 +9,7 @@
     <title>{head.title} | {global.appName}</title>
     <meta name="description" content="{head.description}">
 
-    <link type="image/x-icon" rel="icon" href="favicon.ico">
+    <link type="image/x-icon" rel="shortcut icon" href="favicon.ico" />
     <script type="text/javascript" charset="UTF-8" src="public/app.js"></script>
     <link type="text/css" rel="stylesheet" href="public/app.css">
   </head>
@@ -18,14 +18,16 @@
 
     <div class="header">
 
-      <a href="/" class="logo"></a>
+      <a href="/" class="logo">
+        <img src="public/logo.png" alt="Logo">
+      </a>
 
       <ul class="menu">
         <li>
           <a href="/">Home</a>
         </li>
         <li>
-          <a href="/">Claim</a>
+          <a href="/claim/all">Arcade</a>
         </li>
       </ul>
 
