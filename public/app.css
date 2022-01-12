@@ -1,5 +1,514 @@
+:root {
+  --green: #236f21;
+  --blue: #214a6f;
+  --brown: #6f4621;
+  --white: #c3c3c3;
+  --true-white: #ddd;
+  --black: #3c3c3c;
+  --true-black: #222;
+  --rainbow-1: #216f61;
+  --rainbow-2: #213a6f;
+  --rainbow-3: #6f2150;
+  --rainbow-4: #6f3521;
+  --rainbow-5: #666f21;
+}
+
+/* reset css */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+a,
+a:hover,
+a:focus,
+a:visited {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a,
+button {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+a:hover,
+button:hover {
+  opacity: 0.5;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+button,
+button:focus,
+input:focus,
+textarea:focus,
+select,
+select:focus,
+a:focus {
+  outline: 0px;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+button[disabled] {
+  pointer-events: none;
+}
+
+input {
+  padding: 0;
+}
+
+input:required,
+input:invalid {
+  box-shadow: none;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* main */
 body {
-  color: red;
-  font-size: 30px;
-  margin: auto;
+  min-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  scroll-behavior: smooth;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--white);
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+div.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+div.header a.logo img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px 0 10px calc(100vw / 10);
+  width: 58.6px;
+  height: 33.7px;
+}
+
+div.header div.menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px calc(100vw / 10) 10px 0;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+div.header div.menu a {
+  color: var(--black);
+  letter-spacing: 1px;
+}
+
+div.footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+}
+
+section {
+  height: 100vh;
+  padding: 80px calc(100vw / 50);
+}
+
+.opacity50 {
+  opacity: 0.5;
+}
+
+.opacity90 {
+  opacity: 0.9;
+}
+
+/* section showcase */
+
+section.showcase {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: var(--green);
+}
+
+section.showcase div.canvas {
+  min-width: 375px;
+  min-height: 375px;
+  border-bottom: 1px solid yellow;
+}
+
+section.showcase div.description {
+  flex: 1 0 0;
+}
+
+section.showcase div.title h1 {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  font-size: calc(100vw / 7);
+}
+
+section.showcase div.title h2 {
+  text-align: center;
+  font-size: calc(100vw / 16);
+}
+
+@media screen and (min-aspect-ratio: 9/16) {
+  section.showcase {
+    flex-flow: row nowrap;
+  }
+
+  section.showcase div.canvas {
+    width: calc(100vh - 160px);
+    height: calc(100vh - 160px);
+  }
+
+  section.showcase div.title {
+    display: flex;
+    flex-flow: column nowrap;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  section.showcase div.title h1 {
+    font-size: calc(100vh / 7);
+  }
+
+  section.showcase div.title h2 {
+    font-size: calc(100vh / 22);
+  }
+}
+
+/* section gallery */
+section.gallery {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: var(--blue);
+}
+
+section.gallery div.slider {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+section.gallery div.slider div.slider-main {
+  width: 100%;
+  height: calc(100% - 20%);
+  padding: calc(100vh / 25) 0 calc(100vh / 50);
+}
+
+section.gallery div.slider div.slider-main img,
+section.gallery div.slider div.slider-padding img {
+  object-fit: cover;
+}
+
+section.gallery div.slider div.slider-padding {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: calc(100vw / 50);
+}
+
+section.gallery div.description h2.title {
+  font-size: calc(100vw / 14);
+  margin: calc(100vh / 20) 0;
+  font-weight: 700;
+}
+
+section.gallery div.description h3 {
+  font-size: calc(100vw / 21);
+  margin: calc(100vh / 40) 0;
+  font-weight: 500;
+}
+
+section.gallery div.description h3.datetime {
+  font-size: calc(100vw / 28);
+  text-align: right;
+  font-weight: 400;
+}
+
+@media screen and (min-aspect-ratio: 9/16) {
+  section.gallery {
+    flex-flow: row nowrap;
+  }
+
+  section.gallery div.slider {
+    max-height: calc(100vh - 160px);
+    max-width: calc(60vw);
+  }
+
+  section.gallery div.description {
+    flex: 1 0 0;
+    padding: calc(100vh / 50);
+    align-self: center;
+  }
+
+  section.gallery div.description h2.title {
+    font-size: calc(100vh / 28);
+    margin: calc(100vh / 40) 0;
+  }
+
+  section.gallery div.description h3 {
+    font-size: calc(100vh / 42);
+    margin: calc(100vh / 80) 0;
+  }
+
+  section.gallery div.description h3.datetime {
+    font-size: calc(100vh / 56);
+    text-align: left;
+  }
+}
+
+/* section product */
+section.product {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: var(--black);
+}
+
+section.product div.product-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+section.product div.product-list div.card {
+  width: 30vw;
+  margin-top: 10px;
+  padding: 3px;
+  border-radius: 10px;
+  background-color: var(--white);
+  color: var(--black);
+}
+
+section.product div.product-list div.card div.thumbnail img {
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+section.product div.product-list div.card div.information {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+section.product div.product-list div.card div.information h4 {
+  font-size: 10px;
+  font-weight: 400;
+}
+
+section.product div.title,
+section.product div.description div.content {
+  margin: 20px 0;
+}
+
+section.product div.title {
+  color: var(--true-white);
+}
+
+section.product div.title h3.title {
+  font-weight: 700;
+  font-size: calc(100vw / 10);
+  line-height: calc(100vw / 10);
+}
+
+section.product div.title p {
+  font-weight: 500;
+  font-size: calc(100vw / 30);
+  line-height: calc(100vw / 30);
+  text-align: right;
+}
+
+section.product div.description {
+  background-color: var(--white);
+  color: var(--black);
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1 0 0;
+}
+
+section.product div.description div.content {
+  font-size: calc(100vw / 30);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+section.product div.description div.content p {
+  width: 70%;
+}
+
+section.product div.description div.content a {
+  width: 25%;
+  border-radius: 10px;
+  line-height: calc(100vw / 10);
+  text-align: center;
+  vertical-align: middle;
+  background-color: var(--rainbow-1);
+  color: var(--white);
+}
+
+section.product div.description div.information {
+  font-size: calc(100vw / 30);
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+section.product div.description div.information div.total,
+section.product div.description div.information div.minted,
+section.product div.description div.information div.notice {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 5px;
+}
+
+section.product div.description div.information div.notice {
+  flex: 1 1 0;
+}
+
+@media screen and (min-aspect-ratio: 9/16) {
+  section.product {
+    flex-flow: row nowrap;
+  }
+
+  section.product div.product-list {
+    max-width: 50vw;
+  }
+
+  section.product div.product-list div.card {
+    width: 16vw;
+    padding: 10px;
+  }
+
+  section.product div.title h3.title {
+    font-size: 10vh;
+    line-height: 10vh;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  section.product div.title p {
+    font-size: 3vh;
+    line-height: 3vh;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  section.product div.title {
+    margin: 0 1vw;
+    display: flex;
+    flex-flow: row-reverse nowrap;
+  }
+
+  section.product div.description {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+  }
+
+  section.product div.description div.content {
+    font-size: 1.4vw;
+  }
+
+  section.product div.description div.content p {
+    width: 70%;
+  }
+
+  section.product div.description div.content a {
+    width: 30%;
+    line-height: 5vw;
+  }
+
+  section.product div.description div.information {
+    font-size: 1.4vw;
+    flex-flow: row wrap;
+  }
+
+  section.product div.description div.information div.total,
+  section.product div.description div.information div.minted {
+    font-size: 2vw;
+    width: 50%;
+  }
+}
+
+/* top curve*/
+.custom-shape-divider-top-1641922047 {
+  z-index: -999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1641922047 svg {
+  position: relative;
+  display: block;
+  width: calc(300% + 1.3px);
+  height: 150px;
+}
+
+.custom-shape-divider-top-1641922047 .shape-fill {
+  fill: #c3c3c3;
+}
+
+/* bottom curve*/
+.custom-shape-divider-bottom-1641921850 {
+  z-index: -999;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1641921850 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 100px;
+}
+
+.custom-shape-divider-bottom-1641921850 .shape-fill {
+  fill: #c3c3c3;
 }
