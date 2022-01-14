@@ -76,7 +76,7 @@ const unifiedServer = function(req, res){
       'payload': helpers.parseJsonToObject(buffer)
     }
 
-    // route the request to the specified handler
+      // route the request to the specified handler
     reqHandler(data, function(statusCode, payload, contentType) {
       // determine the type of response (default: JSON)
       contentType = sanityCheck.string(contentType, 'json')
@@ -124,6 +124,11 @@ const unifiedServer = function(req, res){
         payloadString = sanityCheck.notFalsy(payload)
       }
 
+      if (contentType === 'js') {
+        res.setHeader('Content-Type','application/javascript')
+        payloadString = sanityCheck.notFalsy(payload)
+      }
+
       // return the response-parts that are common to all content-types
       res.writeHead(statusCode)
       res.end(payloadString)
@@ -134,9 +139,9 @@ const unifiedServer = function(req, res){
 
       // log the response
       // @TODO delete it after checking
-      console.log('return statusCode: ', statusCode)
-      console.log('return payloadString: ', payloadString)
-      console.log('= = = = = = = = = = = = =')
+      // console.log('return statusCode: ', statusCode)
+      // console.log('return payloadString: ', payloadString)
+      // console.log('= = = = = = = = = = = = =')
 
     })
 

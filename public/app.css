@@ -5,6 +5,7 @@
   --white: #c3c3c3;
   --true-white: #ddd;
   --black: #3c3c3c;
+  --blackO50: rgba(60, 60, 60, 0.5);
   --true-black: #222;
   --rainbow-1: #216f61;
   --rainbow-2: #213a6f;
@@ -156,8 +157,16 @@ section {
   opacity: 0.5;
 }
 
+.opacity75 {
+  opacity: 0.75;
+}
+
 .opacity90 {
   opacity: 0.9;
+}
+
+.d-none {
+  display: none !important;
 }
 
 /* section showcase */
@@ -168,7 +177,7 @@ section.showcase {
   background-color: var(--green);
 }
 
-section.showcase div.canvas {
+section.showcase canvas.canvas {
   min-width: 375px;
   min-height: 375px;
   border-bottom: 1px solid yellow;
@@ -190,7 +199,7 @@ section.showcase div.title h2 {
   font-size: calc(100vw / 16);
 }
 
-@media screen and (min-aspect-ratio: 9/16) {
+@media screen and (orientation: landscape) {
   section.showcase {
     flex-flow: row nowrap;
   }
@@ -263,7 +272,7 @@ section.gallery div.description h3.datetime {
   font-weight: 400;
 }
 
-@media screen and (min-aspect-ratio: 9/16) {
+@media screen and (orientation: landscape) {
   section.gallery {
     flex-flow: row nowrap;
   }
@@ -297,45 +306,52 @@ section.gallery div.description h3.datetime {
 
 /* section product */
 section.product {
+  background-color: var(--black);
   display: flex;
   flex-flow: column nowrap;
-  background-color: var(--black);
+  justify-content: space-between;
 }
 
 section.product div.product-list {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
-}
-
-section.product div.product-list div.card {
-  width: 30vw;
-  margin-top: 10px;
-  padding: 3px;
+  justify-content: flex-start;
+  align-items: center;
   border-radius: 10px;
+  padding: 10px;
   background-color: var(--white);
   color: var(--black);
 }
 
-section.product div.product-list div.card div.thumbnail img {
-  border-top-left-radius: 7px;
-  border-top-right-radius: 7px;
+section.product div.product-list div.card-main {
+  width: calc(100% / 7 * 6);
 }
 
-section.product div.product-list div.card div.information {
+section.product div.product-list div.card-padding {
+  width: calc(100% / 7);
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+section.product div.product-list div.card-padding div.card {
+  visibility: hidden;
+}
+
+section.product div.product-list div.card-padding div.card.opacity50 {
+  visibility: visible;
+}
+
+section.product div.product-list div.card-information {
+  width: calc(100% / 7 * 6);
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+  padding: 5px;
 }
 
-section.product div.product-list div.card div.information h4 {
+section.product div.product-list div.card-information h4 {
   font-size: 10px;
   font-weight: 400;
-}
-
-section.product div.title,
-section.product div.description div.content {
-  margin: 20px 0;
 }
 
 section.product div.title {
@@ -344,14 +360,15 @@ section.product div.title {
 
 section.product div.title h3.title {
   font-weight: 700;
-  font-size: calc(100vw / 10);
-  line-height: calc(100vw / 10);
+  font-size: 14vw;
+  line-height: 14vw;
+  text-align: right;
 }
 
 section.product div.title p {
   font-weight: 500;
-  font-size: calc(100vw / 30);
-  line-height: calc(100vw / 30);
+  font-size: 3vw;
+  line-height: 3vw;
   text-align: right;
 }
 
@@ -360,11 +377,10 @@ section.product div.description {
   color: var(--black);
   border-radius: 10px;
   padding: 10px;
-  flex: 1 0 0;
 }
 
 section.product div.description div.content {
-  font-size: calc(100vw / 30);
+  font-size: 3vw;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -376,8 +392,8 @@ section.product div.description div.content p {
 
 section.product div.description div.content a {
   width: 25%;
-  border-radius: 10px;
-  line-height: calc(100vw / 10);
+  border-radius: 50px;
+  line-height: 10vw;
   text-align: center;
   vertical-align: middle;
   background-color: var(--rainbow-1);
@@ -385,36 +401,47 @@ section.product div.description div.content a {
 }
 
 section.product div.description div.information {
-  font-size: calc(100vw / 30);
+  margin: 10px 0;
+  font-size: 4vw;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: space-evenly;
 }
 
-section.product div.description div.information div.total,
-section.product div.description div.information div.minted,
-section.product div.description div.information div.notice {
+section.product
+  div.description
+  div.information
+  div.total-supply
+  div.total-supply-title,
+section.product div.description div.information div.minted div.minted-title {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   align-items: center;
-  padding: 5px;
 }
 
-section.product div.description div.information div.notice {
-  flex: 1 1 0;
+section.product div.description div.information div.total-supply p.number,
+section.product div.description div.information div.minted p.number {
+  font-size: 10vw;
+  text-align: center;
 }
 
-@media screen and (min-aspect-ratio: 9/16) {
+section.product
+  div.description
+  div.information
+  div.total-supply
+  div.total-supply-title
+  p,
+section.product div.description div.information div.minted div.minted-title p {
+  margin-left: 2vw;
+}
+
+@media screen and (orientation: landscape) {
   section.product {
     flex-flow: row nowrap;
   }
 
   section.product div.product-list {
     max-width: 50vw;
-  }
-
-  section.product div.product-list div.card {
-    width: 16vw;
-    padding: 10px;
   }
 
   section.product div.title h3.title {
@@ -440,33 +467,51 @@ section.product div.description div.information div.notice {
   section.product div.description {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-evenly;
   }
 
   section.product div.description div.content {
-    font-size: 1.4vw;
+    flex-flow: column nowrap;
+    align-items: unset;
+    font-size: 2vh;
+    flex: 1 0 0;
+    justify-content: space-evenly;
   }
 
   section.product div.description div.content p {
-    width: 70%;
+    text-align: center;
+    width: 100%;
   }
 
   section.product div.description div.content a {
-    width: 30%;
-    line-height: 5vw;
+    width: 100%;
+    margin: 1vh 0;
+    line-height: 8vh;
   }
 
   section.product div.description div.information {
-    font-size: 1.4vw;
-    flex-flow: row wrap;
+    font-size: 2vh;
+    flex-flow: column nowrap;
+    align-items: center;
+    flex: 1 0 0;
   }
 
-  section.product div.description div.information div.total,
-  section.product div.description div.information div.minted {
-    font-size: 2vw;
-    width: 50%;
+  section.product div.description div.information div.total-supply p.number,
+  section.product div.description div.information div.minted p.number {
+    font-size: 6vh;
   }
 }
+
+/* section mint-buy */
+section.mint-buy {
+  background-color: var(--true-white);
+  color: var(--true-black);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+
+
 
 /* top curve*/
 .custom-shape-divider-top-1641922047 {

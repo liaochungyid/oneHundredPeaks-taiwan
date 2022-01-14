@@ -10,5 +10,8 @@
   },
   "keywords": [],
   "author": "LCY",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.136.0"
+  }
 }
