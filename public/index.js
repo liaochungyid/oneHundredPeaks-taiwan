@@ -1,3 +1,54 @@
+// node elements
+const galleryMainImg = document.querySelector('#gallery-main-img')
+const galleryPadding = document.querySelector('#gallery-padding')
+const galleryPaddingOpacityList = document.querySelectorAll('.paddings .padding')
+const productPaginationDotList = document.querySelectorAll('.pagination .dot')
+const productCardsCardList = document.querySelectorAll('.cards .card')
+const buttonLeftRight = document.querySelector('.product-list .button')
+
+let initProductActiveIndex = 0
+
+// event listener for clicking to swap content
+galleryPadding.addEventListener('click', function onGalleryPaddingClick(event) {
+  const target = event.target
+
+  // check if click on the image
+  if (target.src) {
+    // remove and add specific class
+    galleryPaddingOpacityList.forEach(elem => { elem.classList = 'padding opacity50' })
+    target.classList = 'padding opacity90'
+
+    // set the main part src url
+    galleryMainImg.src = target.src
+  }
+})
+
+buttonLeftRight.addEventListener('click', function onButtonLeftClick(event){
+  const target = event.target
+
+  // check the target
+  if (target.classList.contains('product-list-button')) {
+
+    // do some class edit for original index
+    productPaginationDotList[initProductActiveIndex].classList.remove('active')
+    productCardsCardList[initProductActiveIndex].classList.remove('active')
+
+    // switch the index
+    if (target.classList.contains('left')) {
+      initProductActiveIndex = initProductActiveIndex - 1 < 0 ? 4 : initProductActiveIndex - 1
+    } else if (target.classList.contains('right')) {
+      initProductActiveIndex = initProductActiveIndex + 1 > 4 ? 0 : initProductActiveIndex + 1
+    }    
+
+    // add class to new index
+    productPaginationDotList[initProductActiveIndex].classList.add('active')
+    productCardsCardList[initProductActiveIndex].classList.add('active')
+
+  }
+
+})
+
+
 // dependencies
 import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.136.0-4Px7Kx1INqCFBN0tXUQc/mode=imports,min/optimized/three.js'
 import { OrbitControls } from './OrbitControls.js'
