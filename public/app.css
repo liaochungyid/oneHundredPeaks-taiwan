@@ -150,7 +150,7 @@ div.footer {
 
 section {
   height: 100vh;
-  padding: 80px calc(100vw / 50);
+  padding: 80px 2vw;
 }
 
 .opacity50 {
@@ -174,17 +174,23 @@ section {
 section.showcase {
   display: flex;
   flex-flow: column nowrap;
-  background-color: var(--green);
+  background-color: var(--blue);
 }
 
 section.showcase canvas.canvas {
   min-width: 375px;
   min-height: 375px;
-  border-bottom: 1px solid yellow;
+  max-width: 98vw;
+  max-height: calc(98vw);
 }
 
 section.showcase div.description {
   flex: 1 0 0;
+  font-size: calc(100vw / 32);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  padding: 2vw;
 }
 
 section.showcase div.title h1 {
@@ -204,9 +210,13 @@ section.showcase div.title h2 {
     flex-flow: row nowrap;
   }
 
-  section.showcase div.canvas {
-    width: calc(100vh - 160px);
-    height: calc(100vh - 160px);
+  section.showcase canvas.canvas {
+    max-width: 50vw;
+    max-height: calc(100vh - 160px);
+  }
+
+  section.showcase div.description {
+    font-size: calc(100vh / 44);
   }
 
   section.showcase div.title {
@@ -221,7 +231,7 @@ section.showcase div.title h2 {
   }
 
   section.showcase div.title h2 {
-    font-size: calc(100vh / 22);
+    font-size: calc(100vh / 28);
   }
 }
 
@@ -229,7 +239,7 @@ section.showcase div.title h2 {
 section.gallery {
   display: flex;
   flex-flow: column nowrap;
-  background-color: var(--blue);
+  background-color: var(--green);
 }
 
 section.gallery div.slider {
@@ -508,10 +518,6 @@ section.mint-buy {
   padding-left: 0;
   padding-right: 0;
 }
-
-
-
-
 
 /* top curve*/
 .custom-shape-divider-top-1641922047 {

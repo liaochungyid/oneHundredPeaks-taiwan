@@ -13,22 +13,29 @@ const sceneData = {
 }
 
 const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(75, sceneData.ratio, 0.1, 1000 )
+
+const camera = new THREE.PerspectiveCamera(60, sceneData.ratio, 0.1, 1000 )
 camera.position.set(-30,75,75)
 
-const renderer = new THREE.WebGLRenderer({ canvas: showcase })
+const renderer = new THREE.WebGLRenderer({ canvas: showcase, alpha: true })
 renderer.setPixelRatio(sceneData.ratio)
 renderer.setSize(sceneData.width, sceneData.height)
+renderer.shadowMap.enabled = true
 
-const pointLight = new THREE.PointLight(0xff0000)
-pointLight.position.set(20,20,20)
+const pointLight = new THREE.PointLight(0xffffff,1,200)
+pointLight.position.set(120,10,10)
+pointLight.castShadow = true
 
-const ambientLight = new THREE.AmbientLight(0xffffff)
-scene.add(pointLight, ambientLight)
+const pointLightPivot = new THREE.Object3D()
+pointLightPivot.add(pointLight)
+scene.add(pointLightPivot)
 
-const lightHelper = new THREE.PointLightHelper(pointLight)
-const gridHelper = new THREE.GridHelper(200,50)
-scene.add(lightHelper,gridHelper)
+const ambientLight = new THREE.AmbientLight(0x003366)
+scene.add(pointLightPivot, ambientLight)
+
+// const lightHelper = new THREE.PointLightHelper(pointLight)
+const gridHelper = new THREE.GridHelper(150,30)
+scene.add(gridHelper)
 
 const controls = new OrbitControls( camera, renderer.domElement )
 controls.autoRotate = true
@@ -49,26 +56,19 @@ app.client.request(undefined,"/public/castHeight.json","GET",undefined,undefined
   }
 })    
 
-
-// const geometry = new THREE.BoxGeometry( .1, .1, .1);
-// const material = new THREE.MeshStandardMaterial( {color: 0x000000} );
-// const cube = new THREE.Mesh( geometry, material);
-// cube.position.set(0,0,0)
-// scene.add(cube)
-
 function addBlock(x,y,z) {
   const geometry = new THREE.BoxGeometry( 1, y, 1);
-  const color = new THREE.Color("rgb("+(y*14)+","+(y*10 + 128)+","+(60-y*4)+")")
-  const material = new THREE.MeshBasicMaterial( {color: color} );
+  const color = new THREE.Color("rgb("+(y*20 + 21)+","+(y*11 + 128)+","+(y*6 + 76)+")")
+  const material = new THREE.MeshStandardMaterial( {color: color} );
   const cube = new THREE.Mesh( geometry, material);
-  cube.position.set(x-50,y/2,z-50)
+  cube.position.set(x-70,y/2,z-70)
   scene.add(cube)
 }
 
 function animate() {
   window.requestAnimationFrame(animate)
 
-  // cube.rotation.y += 100
+  pointLightPivot.rotation.z += .01
 
   controls.update()
 
