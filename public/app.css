@@ -6,6 +6,7 @@
   --true-white: #ddd;
   --black: #3c3c3c;
   --blackO50: rgba(60, 60, 60, 0.5);
+  --whiteO50: rgba(195, 195, 195, 0.5);
   --true-black: #222;
   --rainbow-1: #216f61;
   --rainbow-2: #213a6f;
@@ -177,7 +178,7 @@ section.showcase {
   background-color: var(--blue);
 }
 
-section.showcase canvas.canvas {
+section.showcase canvas.canvas#showcase {
   min-width: 375px;
   min-height: 375px;
   max-width: 98vw;
@@ -210,7 +211,7 @@ section.showcase div.title h2 {
     flex-flow: row nowrap;
   }
 
-  section.showcase canvas.canvas {
+  section.showcase canvas.canvas#showcase {
     max-width: 50vw;
     max-height: calc(100vh - 160px);
   }
@@ -323,63 +324,75 @@ section.product {
 }
 
 section.product div.product-list {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: center;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: var(--white);
-  color: var(--black);
-}
-
-section.product div.product-list div.card-main {
-  width: calc(100% / 7 * 6);
-}
-
-section.product div.product-list div.card-padding {
-  width: calc(100% / 7);
+  flex: 1 0 0;
   display: flex;
   flex-flow: column nowrap;
 }
 
-section.product div.product-list div.card-padding div.card {
-  visibility: hidden;
-}
-
-section.product div.product-list div.card-padding div.card.opacity50 {
-  visibility: visible;
-}
-
-section.product div.product-list div.card-information {
-  width: calc(100% / 7 * 6);
+section.product div.product-list div.pagination {
+  align-items: center;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  padding: 5px;
+  justify-content: center;
 }
 
-section.product div.product-list div.card-information h4 {
-  font-size: 10px;
-  font-weight: 400;
+section.product div.product-list div.pagination a.dot {
+  background: var(--true-black);
+  border-radius: 8px;
+  height: 8px;
+  width: 8px;
+  margin: 6vw 2vw 4vw;
+  transform: scale(0.75);
+}
+
+section.product div.product-list div.pagination a.dot.active {
+  background: var(--true-white);
+  transform: scale(1);
+}
+
+section.product div.product-list ul.cards {
+  flex: 1 0 0;
+  position: relative;
+}
+
+section.product div.product-list ul.cards li.card {
+  position: absolute;
+  width: 100%;
+  list-style-type: none;
+  opacity: 0;
+}
+
+section.product div.product-list ul.cards li.card.active {
+  opacity: 1;
+}
+
+section.product div.product-list div.button {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+}
+
+section.product div.product-list div.button a {
+  color: var(--true-white);
+  margin: 4vw 0 6vw;
 }
 
 section.product div.title {
   color: var(--true-white);
+  padding: 3vw 0;
 }
 
 section.product div.title h3.title {
   font-weight: 700;
   font-size: 14vw;
   line-height: 14vw;
-  text-align: right;
+  text-align: center;
 }
 
 section.product div.title p {
   font-weight: 500;
   font-size: 3vw;
   line-height: 3vw;
-  text-align: right;
+  text-align: center;
 }
 
 section.product div.description {
@@ -454,6 +467,28 @@ section.product div.description div.information div.minted div.minted-title p {
     max-width: 50vw;
   }
 
+  section.product div.product-list div.pagination a.dot {
+    margin: 3vh 2vh;
+  }
+
+  section.product div.product-list div.button a {
+    margin: 3vh 0;
+  }
+
+  section.product div.product-list ul.cards li.card {
+    width: 100%;
+    height: 100%;
+  }
+
+  section.product div.product-list ul.cards li.card div.thumbnail {
+    width: 100%;
+    height: 100%;
+  }
+
+  section.product div.product-list ul.cards li.card div.thumbnail img {
+    object-fit: contain;
+  }
+
   section.product div.title h3.title {
     font-size: 10vh;
     line-height: 10vh;
@@ -511,14 +546,6 @@ section.product div.description div.information div.minted div.minted-title p {
   }
 }
 
-/* section mint-buy */
-section.mint-buy {
-  background-color: var(--true-white);
-  color: var(--true-black);
-  padding-left: 0;
-  padding-right: 0;
-}
-
 /* top curve*/
 .custom-shape-divider-top-1641922047 {
   z-index: -999;
@@ -562,4 +589,146 @@ section.mint-buy {
 
 .custom-shape-divider-bottom-1641921850 .shape-fill {
   fill: #c3c3c3;
+}
+
+/* section claim */
+canvas.canvas#claim-background {
+  z-index: -999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--true-black);
+}
+section.claim {
+  padding: 0;
+}
+
+section.claim div.header {
+  height: 52px;
+  background-color: var(--whiteO50);
+  -webkit-box-shadow: 0 2px 3px 3px var(--black);
+  -moz-box-shadow: 0 2px 3px 3px var(--black);
+  box-shadow: 0 2px 3px 3px var(--black);
+}
+
+section.claim div.header div.menu a {
+  color: var(--true-white);
+}
+
+section.claim div.cards {
+  display: flex;
+  margin: 10px 10px 0;
+  height: calc(100vh - 75px);
+  flex-flow: column nowrap;
+}
+
+section.claim div.cards a.cards-header {
+  margin: 5px 0;
+  background-color: var(--true-white);
+  text-align: center;
+  flex: 0 0 0;
+}
+
+section.claim div.cards a.cards-header p {
+  color: var(--blue);
+}
+
+section.claim div.cards a.cards-header.first {
+  border-radius: 10px 10px 0 0;
+}
+
+section.claim div.cards a.cards-header.last {
+  border-radius: 0 0 10px 10px;
+}
+
+section.claim div.cards div.content {
+  display: none;
+  margin: 5px 0;
+  background-color: var(--blackO50);
+}
+
+section.claim div.cards div.content.active {
+  flex: 1 0 0;
+  display: inline-block;
+  overflow-y: auto;
+}
+
+section.claim div.cards div.content a.card {
+  display: block;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--white);
+}
+
+section.claim div.cards div.content a.card div.card-header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+section.claim div.cards div.content a.card div.card-header img {
+  background-color: var(--whiteO50);
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  margin-right: 8px;
+}
+
+section.claim
+  div.cards
+  div.content
+  a.card
+  div.card-header
+  div.card-header-title
+  h3 {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+section.claim
+  div.cards
+  div.content
+  a.card
+  div.card-header
+  div.card-header-title
+  div.card-header-title-second {
+  font-size: 12px;
+  line-height: 18px;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 12px;
+  font-weight: 400;
+}
+
+section.claim div.cards div.content a.card div.card-content {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+  margin: 8px 0;
+}
+
+section.claim div.cards div.content a.card div.information p {
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 400;
+  text-align: right;
+}
+
+section.claim div.cards div.content a.card.lg {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  height: 100%;
+}
+section.claim div.cards div.content a.card.lg div.card-content,
+section.claim div.cards div.content a.card.lg div.information p {
+  padding: 40px 0;
+  font-weight: 700;
+}
+
+section.claim div.cards div.content a.card.lg div.thumbnail img {
+  width: 80vw;
 }

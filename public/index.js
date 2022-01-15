@@ -1,6 +1,6 @@
 // dependencies
 import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.136.0-4Px7Kx1INqCFBN0tXUQc/mode=imports,min/optimized/three.js'
-import { OrbitControls } from './../public/OrbitControls.js'
+import { OrbitControls } from './OrbitControls.js'
 
 // DOM
 const showcase = document.querySelector('#showcase')
