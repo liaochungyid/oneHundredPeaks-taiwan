@@ -203,4 +203,48 @@
 
 </section>
 
-<script type="module" src="public/claim.js"></script>
+<script type="module" src="public/arcade.js"></script>
+
+<section class="modal">
+  <div class="dialog">
+    <div class="dialog-header">
+      <span>Get your art</span>
+      <a class="close">X</a>
+    </div>
+
+    <form method="POST" action="/api/claim" id="claim-create">
+      <div class="form-error">Error</div>
+      <div class="form-success">Success</div>
+
+      <div class="form-text">
+        <label for="address">Wallet address</label>
+        <input type="text" name="address" id="address" required value="">
+      </div>
+
+      <div class="form-text">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required value="">
+      </div>
+
+      <div class="form-text">
+        <label for="antiPhishingPhrase">Anti-Phishing Phrase</label>
+        <input type="text" name="antiPhishingPhrase" id="antiPhishingPhrase" required value="">
+      </div>
+
+      <div class="form-text">
+        <label for="txn">Transaction Number</label>
+        <input type="text" name="txn" id="txn" required value="">
+      </div>
+
+      <div class="form-checkbox">
+        <input type="checkbox" name="tosAgreement" id="tosAgreement" required>
+        <label for="tosAgreement">Agree the terms and conditions</label>
+      </div>
+
+      <div class="form-button">
+        <button class="" type="submit">Send</button>
+      </div>
+    </form>
+  </div>
+
+</section>

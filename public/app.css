@@ -768,3 +768,104 @@ section.claim div.cards div.content a.card.lg div.thumbnail img {
     transform: translateY(-160px);
   }
 }
+
+/* section modal */
+section.modal {
+  position: absolute;
+  top: calc(100vh / 3);
+  left: 2vw;
+  width: 96vw;
+  height: auto;
+  background-color: var(--true-white);
+  border-radius: 10px;
+  color: var(--true-black);
+  padding: 10px;
+  transform: translateX(-5vw);
+  opacity: 0;
+}
+
+section.modal div.dialog {
+  transform: translateX(10vw);
+  opacity: 0;
+}
+
+section.modal.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+section.modal.active div.dialog {
+  transition-delay: 0.25s;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+section.modal div.dialog div.dialog-header {
+  border-bottom: 1px solid var(--black);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+section.modal div.dialog div.dialog-header a,
+section.modal div.dialog div.dialog-header span,
+section.modal div.dialog form {
+  padding: 10px;
+}
+
+section.modal div.dialog form div.form-error {
+  text-align: center;
+  color: red;
+}
+
+section.modal div.dialog form div.form-success {
+  text-align: center;
+  color: var(--green);
+}
+
+section.modal div.dialog form div.form-text,
+section.modal div.dialog form div.form-checkbox {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  padding-top: 8px;
+}
+
+section.modal div.dialog form div.form-text input {
+  border: none;
+  border-radius: 8px;
+  height: 28px;
+  background-color: var(--whiteO50);
+  display: block;
+  width: 100%;
+  padding: 0 8px;
+}
+
+section.modal div.dialog form div.form-checkbox {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+section.modal div.dialog form div.form-checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--black);
+}
+
+section.modal div.dialog form div.form-button {
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--black);
+  margin-top: 16px;
+  text-align: center;
+}
+
+section.modal div.dialog form div.form-button button {
+  color: var(--true-white);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+}
