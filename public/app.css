@@ -751,7 +751,6 @@ section.claim div.cards div.content a.card.lg div.thumbnail img {
 
 @media screen and (orientation: landscape) {
   section.claim div.cards {
-    /* width: 50%; */
     max-width: 480px;
   }
 
@@ -784,6 +783,10 @@ section.modal {
   opacity: 0;
 }
 
+section.modal button {
+  width: 100%;
+}
+
 section.modal div.dialog {
   transform: translateX(10vw);
   opacity: 0;
@@ -813,9 +816,16 @@ section.modal div.dialog form {
   padding: 10px;
 }
 
-section.modal div.dialog form div.form-error {
+section.modal form div.form-error {
+  display: none;
   text-align: center;
   color: red;
+}
+
+section.modal form div.form-success {
+  display: none;
+  text-align: center;
+  color: var(--green);
 }
 
 section.modal div.dialog form div.form-success {
@@ -841,6 +851,10 @@ section.modal div.dialog form div.form-text input {
   padding: 0 8px;
 }
 
+section.modal div.dialog form div.form-text input:disabled {
+  background-color: var(--true-white);
+}
+
 section.modal div.dialog form div.form-checkbox {
   display: flex;
   flex-flow: row nowrap;
@@ -858,7 +872,7 @@ section.modal div.dialog form div.form-checkbox input[type="checkbox"] {
 section.modal div.dialog form div.form-button {
   width: 100%;
   border-radius: 8px;
-  background-color: var(--black);
+  background-color: var(--green);
   margin-top: 16px;
   text-align: center;
 }
@@ -868,4 +882,164 @@ section.modal div.dialog form div.form-button button {
   font-size: 20px;
   font-weight: 500;
   line-height: 28px;
+}
+
+section.modal div.dialog div.dialog-footer {
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 28px;
+  text-align: center;
+}
+
+section.modal div.dialog form {
+  transform-origin: top left;
+  transform: scaleY(0);
+  max-height: 0;
+  opacity: 0;
+}
+
+section.modal div.dialog form.active {
+  opacity: 1;
+  transform: scaleY(1);
+  max-height: calc(100vh * 2 / 3);
+}
+
+section.modal #claim-modify-delete-confirm {
+  background-color: white;
+  border-radius: 10px;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 75%;
+  min-height: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 10px;
+  transform: translate(-200vw, -50%);
+  transition-duration: 0.6s;
+}
+
+section.modal #claim-modify-delete-confirm.active {
+  transform: translate(-50%, -50%);
+}
+
+section.modal #claim-modify-delete-confirm {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 18px;
+}
+
+section.modal #claim-modify-delete-confirm div.title {
+  padding: 15px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+section.modal #claim-modify-delete-confirm div.content {
+  font-size: 16px;
+  line-height: 28px;
+}
+
+section.modal #claim-modify-delete-confirm button {
+  font-size: 20px;
+  line-height: 28px;
+  color: white;
+  border-radius: 8px;
+  width: 100%;
+}
+
+section.modal #claim-modify-delete-confirm button.cancel {
+  background-color: red;
+}
+
+section.modal #claim-modify-delete-confirm button.confirm {
+  background-color: var(--green);
+}
+
+@media screen and (orientation: landscape) {
+  section.modal {
+    max-width: 480px;
+    left: 1vw;
+  }
+}
+
+/* section table */
+section.table {
+  position: absolute;
+  bottom: 2vw;
+  right: 2vw;
+  max-width: 44px;
+  max-height: 44px;
+  min-width: 44px;
+  background-color: var(--whiteO50);
+  padding: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  transform-origin: bottom right;
+  transition-duration: 0.6s;
+}
+
+section.table.active {
+  min-width: 96vw;
+  max-width: 96vw;
+  max-height: calc(100vh * 2 / 3 - 2vw);
+}
+
+section.table.active div.table-title h2 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+}
+
+section.table div.table-title h2 {
+  transform: translateY(-10px);
+}
+
+section.table div.table-title h2 span {
+  font-size: 20px;
+  line-height: 28px;
+  flex: 1 0 0;
+}
+
+section.table div.table-title h2 span.hide {
+  font-size: 35px;
+  line-height: 28px;
+  font-weight: 400;
+  padding: 10px;
+  flex: 0 0 0;
+}
+
+section.table div.table-content {
+  overflow-y: scroll;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+section.table div.table-content table {
+  width: 100%;
+}
+
+section.table div.table-content tr {
+  width: 100%;
+}
+
+section.table div.table-content th {
+  padding: 8px 0;
+  margin: 0 0 10px 0;
+  background-color: var(--white);
+  color: var(--black);
+  border-radius: 8px;
+}
+
+section.table div.table-content td {
+  text-align: center;
+  font-weight: 400;
+  padding: 5px;
 }

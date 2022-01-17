@@ -152,13 +152,10 @@ const unifiedServer = function(req, res){
 // define request routers
 const router = {
   '': handlers.home,
-  // 'claim/create': handlers.postClaim,
-  // 'claim/edit': handlers.putClaim,
-  // 'claim/delete': handlers.deleteClaim,
-  // 'session/create': handlers.createSession,
-  // 'session/delete' : handlers.deleteSession,
   'arcade': handlers.arcade,
+  'favicon.ico': handlers.favicon,
   'ping': handlers.ping,
   'api/claim': handlers.claims,
-  'favicon.ico': handlers.favicon
+  'api/claims': handlers.claimsList,
+  'api/session': handlers.createSession
 }

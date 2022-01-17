@@ -3,7 +3,7 @@ const app = {}
 
 // config
 app.config = {
-  'antiPhishingPhrase': false
+  'antiphishingtoken': false
 }
 
 // AJAX Client (for RESTfull api)
@@ -20,7 +20,7 @@ app.client.request = function(headers, path, method, queryStringObject, payload,
   cb = typeof(cb) === 'function' ? cb : false
 
   // for each query string parameters sent, add it to path
-  const requestUrl = path + '?'
+  let requestUrl = path + '?'
   let counter = 0
   for (let queryKey in queryStringObject){
     if (queryStringObject.hasOwnProperty(queryKey)) {
@@ -47,10 +47,10 @@ app.client.request = function(headers, path, method, queryStringObject, payload,
   }
 
   // add token if there is
-  if (app.config.antiPhishingPhrase) {
-    xhr.setRequestHeader("antiphishingtoken",app.config.antiPhishingPhrase)
+  if (app.config.antiphishingtoken) {
+    xhr.setRequestHeader("antiphishingtoken",app.config.antiphishingtoken)
   }
-
+  
   // wait for response comeback
   xhr.onreadystatechange = function() {
     if (xhr.readyState === XMLHttpRequest.DONE) {
