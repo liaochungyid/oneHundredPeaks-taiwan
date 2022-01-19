@@ -1,3 +1,7 @@
+// dependencies
+import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.136.0-4Px7Kx1INqCFBN0tXUQc/mode=imports,min/optimized/three.js'
+import { OrbitControls } from './OrbitControls.js'
+
 app.workers = function() {
 
   // node elements
@@ -41,43 +45,45 @@ app.workers = function() {
     node.addEventListener('click', function onClaimCardsClick(event){
       let target = event.target
 
-      closeAll()
-
-      // check if it is not claim a peak button, then open the specific content
-      // if it is claim a peak button, load and insert the content
-      if (!target.classList.contains('collapse')) {
-        // get the tag:a id
-        if (!target.id) {
-          target = target.parentElement
-        }
-
-        // add target opacity50 class
-        target.classList.add('opacity50')
-
-        // replace -head- to -content- for query selector
-        const id = '#' + target.id.replace('header','content')
-        document.querySelector(id).classList.add('active')
-
-      } else {
-        // remove d-none class first
-        setTimeout(() => { sectionModal.classList.remove('d-none') }, 200)
+      // check if click active tag (user want close that section), if not, to open that section
+      if (!target.parentElement.classList.contains('opacity50')) {
         
-        // active the modal with time delay (for animation)
-        // and add X (close) event listener, bind the form for actions
-        setTimeout(() => {
-          sectionModal.classList.add('active')
+        closeAll()
 
-          app.bindForms(document.querySelector('form#claim-create'))
-          app.bindForms(document.querySelector('form#claim-modify'))
-          app.bindForms(document.querySelector('form#claim-modify-delete-confirm'))
+        // check if it is not claim a peak button, then open the specific content
+        // if it is claim a peak button, load and insert the content
+        if (!target.classList.contains('collapse')) {
+          // get the tag:a id
+          if (!target.id) { target = target.parentElement }
+
+          // add target opacity50 class
+          target.classList.add('opacity50')
+
+          // replace -head- to -content- for query selector
+          const id = '#' + target.id.replace('header','content')
+          document.querySelector(id).classList.add('active')
+
+        } else {
+          // remove d-none class first
+          setTimeout(() => { sectionModal.classList.remove('d-none') }, 200)
           
-          document.querySelector('a.goto-claim').addEventListener('click', app.swapForm)
+          // active the modal with time delay (for animation)
+          // and add X (close) event listener, bind the form for actions
+          setTimeout(() => {
+            sectionModal.classList.add('active')
 
-          document.querySelector('a.close').addEventListener('click', function(event) {
-            closeAll()            
-          })
-        }, 500)
-      }
+            app.bindForms(document.querySelector('form#claim-create'))
+            app.bindForms(document.querySelector('form#claim-modify'))
+            app.bindForms(document.querySelector('form#claim-modify-delete-confirm'))
+            
+            document.querySelector('a.goto-claim').addEventListener('click', app.swapForm)
+
+            document.querySelector('a.close').addEventListener('click', function(event) {
+              closeAll()            
+            })
+          }, 500)
+        }
+      } else { closeAll() }
 
     })
   })
@@ -97,6 +103,9 @@ app.workers = function() {
   // load table data
   app.tableProcessor()
 
+  // load background animate
+  app.animate()
+
 }
 
 
@@ -115,7 +124,9 @@ app.formSender = function(event) {
   let method = this.method.toUpperCase()
 
   // hide error message, if there is previous error showing
-  document.querySelector(`#${formId} .form-error`).style.display = 'none'
+  if(document.querySelector(`#${formId} .form-error`)){
+    document.querySelector(`#${formId} .form-error`).style.display = 'none'
+  }
 
   // hide success message  if there is previous success showing
   if(document.querySelector("#"+formId+" .form-success")){
@@ -153,6 +164,8 @@ app.formSender = function(event) {
 
       // show the error message
       document.querySelector(`#${formId} .form-error`).style.display = 'block'
+
+
 
     } else {
       // if success, pass to form processor
@@ -205,14 +218,17 @@ app.formProcessor = function(formId, payload, responsePayload) {
       document.querySelector('button.delete[type="button"]').addEventListener('click', app.formConfirm)
 
       // kill session after one minute
-      setTimeout(() => { app.config.antiphishingtoken = false }, 60 * 1000)
+      setTimeout(() => { 
+        app.swapFormSession('claim-modify',undefined,undefined)
+        app.config.antiphishingtoken = false
+      }, 60 * 1000)
       
     } else {
       
       // set success message if not in responsePayload
       if (!success) { success = 'Modify Successfully' }
 
-      app.swapFormSession(formId, payload, responsePayload, true)
+      app.swapFormSession(formId, payload, responsePayload)
 
       // kill the token to end session
       app.config.antiphishingtoken = false
@@ -224,13 +240,17 @@ app.formProcessor = function(formId, payload, responsePayload) {
 
   if (formId === 'claim-modify-delete-confirm') {
 
-    app.swapFormSession('claim-modify', payload, responsePayload, true)
+    app.swapFormSession('claim-modify', payload, responsePayload)
 
     // set success message if not in responsePayload
     if (!success) { success = 'Delete Successfully' }
 
     // time delay to hide the confirm form
-    setTimeout(() => { document.querySelector(`#${formId}`).classList = '' }, 2200)
+    setTimeout(() => {
+      document.querySelector(`#${formId}`).classList = ''
+      app.swapFormSession('claim-modify',undefined,undefined)
+      app.config.antiphishingtoken = false
+    }, 1800)
   }
 
   // set and show the success message if there is
@@ -241,15 +261,16 @@ app.formProcessor = function(formId, payload, responsePayload) {
 
 }
 
-app.swapFormSession = function(formId, payload, responsePayload, hasSession) {
+app.swapFormSession = function(formId, payload, responsePayload) {
   
   const address = document.querySelector('#address')
   const email = document.querySelector('#email')
   const txn = document.querySelector('#txn')
+  const antiPhishingPhrase = document.querySelector('#anti-phishing-phrase')
   const form = document.querySelector(`#${formId}`)
   const formButton = document.querySelector('div.form-button.modify')
 
-  if (!hasSession) {
+  if (!app.config.antiphishingtoken) {
 
     // fill in the input fields
     address.value = responsePayload.address
@@ -268,16 +289,20 @@ app.swapFormSession = function(formId, payload, responsePayload, hasSession) {
     formButton.innerHTML = `
       <input type="hidden" name="_method" value="PUT">
       <button type="submit">Modify</button>
-      <button type="button" class="delete" style="color:red;">Delete</button>
+      <button type="button" class="delete" style="color:var(--true-white);background-color:red;margin-top:10px;">Delete</button>
     `
     // set the token as session
     app.config.antiphishingtoken = responsePayload.hashedPhrase
   } else {
 
     // reset the input fields disable status
+    address.value = ''
     address.disabled = true
+    email.value = ''
     email.disabled = true
+    txn.value = ''
     txn.disabled = false
+    antiPhishingPhrase.value = ''
 
     // swap the form detail back
     form.method = 'POST'
@@ -385,6 +410,47 @@ app.tableProcessor = function() {
       `
     }
   })
+}
+
+app.animate = function() {
+  // DOM
+  const canvas = document.querySelector('canvas#arcade-background')
+
+  const sceneData = {
+    ratio: canvas.getBoundingClientRect().width / canvas.getBoundingClientRect().height,
+    width: canvas.getBoundingClientRect().width,
+    height: canvas.getBoundingClientRect().height
+  }
+
+  if (sceneData.width > sceneData.height) {
+    const scene = new THREE.Scene()
+
+    const camera = new THREE.PerspectiveCamera(60, sceneData.ratio, 0.1, 1000 )
+    camera.position.set(0,sceneData.height/4,600)
+
+    const renderer = new THREE.WebGLRenderer({ canvas })
+    renderer.setPixelRatio(sceneData.ratio)
+    renderer.setSize(sceneData.width, sceneData.height)
+
+    const ambientLight = new THREE.AmbientLight(0xffffff)
+    scene.add(ambientLight)
+
+    const skyWidth = sceneData.width
+    let skyHeight = skyWidth * 0.66
+    const sky = new THREE.Mesh(
+        new THREE.PlaneGeometry(skyWidth,skyHeight),
+        new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load('/public/sky.jpg')} )
+      );
+    scene.add(sky)
+
+    ;(function animate() {
+      window.requestAnimationFrame(animate)
+
+      camera.rotation.y = Math.sin(Date.now() * 0.001) * Math.PI * 0.003
+
+      renderer.render(scene, camera)
+    })()
+  }
 }
 
 // Call the workers processes after the window loads
