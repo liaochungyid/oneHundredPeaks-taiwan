@@ -182,7 +182,6 @@ app.formSender = function(event) {
 app.formProcessor = function(formId, payload, responsePayload) {
   // clean the form value
   const elements = formId === 'claim-modify-delete-confirm' ? document.querySelector('#claim-modify').elements : document.querySelector(`#${formId}`).elements
-  console.log(elements)
   
   for (let i=0;i<elements.length;i++) {
     if (elements[i].type !== 'submit' && elements[i].type !== 'button') {
@@ -204,7 +203,7 @@ app.formProcessor = function(formId, payload, responsePayload) {
     if (!success) { success = 'Create Successfully' }
 
     // @TODO show to user
-    console.log('claim-create response: ',responsePayload)
+    // console.log('claim-create response: ',responsePayload)
   }
 
   // for claim modify
@@ -212,7 +211,7 @@ app.formProcessor = function(formId, payload, responsePayload) {
  
     if (!app.config.antiphishingtoken) {
 
-      app.swapFormSession(formId, payload, responsePayload, false)
+      app.swapFormSession(formId, payload, responsePayload)
 
       // add event listener for delete button
       document.querySelector('button.delete[type="button"]').addEventListener('click', app.formConfirm)
@@ -234,7 +233,7 @@ app.formProcessor = function(formId, payload, responsePayload) {
       app.config.antiphishingtoken = false
 
       // @TODO show to user
-      document.querySelectorAll('section.table div.table-title h2 a').click()
+      document.querySelector('section.table div.table-title h2 a').click()
     }
   }
 

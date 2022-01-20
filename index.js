@@ -142,17 +142,6 @@ const unifiedServer = function(req, res){
       // return the response-parts that are common to all content-types
       res.writeHead(statusCode)
       res.end(payloadString)
-
-      // log the request
-      // @TODO delete it after checking
-      // console.log('request data: ',data)
-
-      // log the response
-      // @TODO delete it after checking
-      // console.log('return statusCode: ', statusCode)
-      // console.log('return payloadString: ', payloadString)
-      // console.log('= = = = = = = = = = = = =')
-
     })
 
   })
