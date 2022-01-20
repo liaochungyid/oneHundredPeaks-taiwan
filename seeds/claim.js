@@ -1,5 +1,6 @@
 // dependencies
 const fs = require('fs')
+const path = require('path')
 const fileCRUD = require('../lib/fileCRUD')
 const helpers = require('../lib/helpers')
 
@@ -15,10 +16,12 @@ const seed = {}
 // number of seeds
 seed.seedAmount = 20
 
+seed.baseDir = path.join(__dirname,'/../')
+
 // goto data file, if not exist yet, make one
 seed.gotoDataFile = function(){
   console.log(reset,'Direct to data dir ...')
-  fs.readdir('data',function(err, dir){
+  fs.readdir(seed.baseDir+'data',function(err, dir){
     if (!err && dir) {
       seed.gotoClaimsFile()
     } else {
@@ -37,7 +40,7 @@ seed.gotoDataFile = function(){
 
 // goto data/claims file, if not exist yet, make one
 seed.gotoClaimsFile = function(){
-  fs.readdir('data/claims',function(err, dir){
+  fs.readdir(seed.baseDir+'data/claims',function(err, dir){
     console.log(reset,'Direct to claims dir ...')
     if (!err && dir) {
       seed.addSeeds()
