@@ -234,7 +234,7 @@ app.formProcessor = function(formId, payload, responsePayload) {
       app.config.antiphishingtoken = false
 
       // @TODO show to user
-
+      document.querySelectorAll('section.table div.table-title h2 a').click()
     }
   }
 
