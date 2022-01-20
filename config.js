@@ -14,12 +14,12 @@ env.staging = {
 
 env.production = {
   'httpPort': 80,
-  'httpsPort': 443,
+  // 'httpsPort': 443,
   'envName': 'production',
   'hashSecret': 'thisIsASecretAsWell',
   'templateGlobals': {
     'appName': 'A Hundred Peaks',
-    'baseUrl': 'http://localhost:80'
+    'baseUrl': 'https://tranquil-lake-73390.herokuapp.com'
   }
 }
 

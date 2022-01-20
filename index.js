@@ -9,6 +9,11 @@ const sanityCheck = require('./lib/sanityCheck')
 const config = require('./config.js')
 const helpers = require('./lib/helpers')
 
+if (process.env.NODE_ENV === 'production') {
+  config.httpPort = process.env.PORT
+  // config.httpsPort = process.env.PORT
+}
+
 // http server responses to all request
 const httpServer = http.createServer(function(req,res) {
   unifiedServer(req,res)
@@ -19,9 +24,12 @@ const httpsServerOption = {
   'key': fs.readFileSync('./https/key.pem'),
   'cert': fs.readFileSync('./https/cert.pem')
 }
-const httpsServer = https.createServer(httpsServerOption, function(req,res) {
-  unifiedServer(req,res)
-})
+let httpsServer
+if (process.env.NODE_ENV !== 'production') {
+  httpsServer = https.createServer(httpsServerOption, function(req,res) {
+    unifiedServer(req,res)
+  })
+}
 
 // start http server
 httpServer.listen(config.httpPort, function() {
@@ -29,9 +37,11 @@ httpServer.listen(config.httpPort, function() {
 })
 
 // start https server
-httpsServer.listen(config.httpsPort, function() {
-  console.log(`The https server is listening on port ${config.httpsPort} in ${config.envName} mode`)
-})
+if (process.env.NODE_ENV !== 'production') {
+  httpsServer.listen(config.httpsPort, function() {
+    console.log(`The https server is listening on port ${config.httpsPort} in ${config.envName} mode`)
+  })
+}
 
 
 // all server logic for both http and https server
