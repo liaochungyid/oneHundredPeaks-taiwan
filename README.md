@@ -2,7 +2,7 @@
 
 # Simple Twitter
 
-![image](https://github.com/liaochungyid/oneHundredPeaks-taiwan/images/cover.png)
+![image](https://github.com/liaochungyid/oneHundredPeaks-taiwan/blob/main/public/images/cover.png)
 
 本專案為 Node.js 原生語言開發(無後端套件)作品
 

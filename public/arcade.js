@@ -202,8 +202,8 @@ app.formProcessor = function(formId, payload, responsePayload) {
     // set success message if not in responsePayload
     if (!success) { success = 'Create Successfully' }
 
-    // @TODO show to user
-    // console.log('claim-create response: ',responsePayload)
+    // show to user
+    setTimeout(()=>{ document.querySelector('section.table div.table-title h2 a').click() }, 1800)
   }
 
   // for claim modify
@@ -232,8 +232,9 @@ app.formProcessor = function(formId, payload, responsePayload) {
       // kill the token to end session
       app.config.antiphishingtoken = false
 
-      // @TODO show to user
-      document.querySelector('section.table div.table-title h2 a').click()
+      // show to user
+      setTimeout(()=>{ document.querySelector('section.table div.table-title h2 a').click() }, 1800)
+
     }
   }
 
