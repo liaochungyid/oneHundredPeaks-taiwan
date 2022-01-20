@@ -361,7 +361,7 @@ app.formConfirm = function(event) {
 }
 
 app.tableProcessor = function() {
-  app.client.request(undefined,'/api/claims','GET',undefined,undefined, function(statusCode, responsePayload){
+  app.client.request(undefined,'/api/claims','GET',{"page":1,"offset":20},undefined, function(statusCode, responsePayload){
 
     if (statusCode === 200) {    
 
@@ -426,7 +426,7 @@ app.animate = function() {
     const scene = new THREE.Scene()
 
     const camera = new THREE.PerspectiveCamera(60, sceneData.ratio, 0.1, 1000 )
-    camera.position.set(0,sceneData.height/4,600)
+    camera.position.set(0,sceneData.height/4,500)
 
     const renderer = new THREE.WebGLRenderer({ canvas })
     renderer.setPixelRatio(sceneData.ratio)
