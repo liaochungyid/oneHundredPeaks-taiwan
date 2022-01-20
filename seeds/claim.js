@@ -70,7 +70,7 @@ seed.addSeeds = function() {
     const address = i < 10 ? '0x11111' + i : '0x1111' + i
     const antiPhishingPhrase = 'aaaaaa'
     const tosAgreement = true
-    const createdAt = Date.now()
+    const createdAt = new Date(new Date(Date.now()).setDate(new Date(Date.now()).getDate() - i/2))
     const updatedAt = createdAt
 
     // hash the anti-phishing phrase
