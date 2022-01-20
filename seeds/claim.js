@@ -92,11 +92,7 @@ seed.addSeeds = function() {
     }
   }
 
-  if (!error) {
-    console.log(green, 'Seeds done!')
-  } else {
-    console.log(red, error)
-  }
+  if (error) { console.log(red, error) }
   
 }
 
