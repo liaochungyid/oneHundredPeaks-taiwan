@@ -382,8 +382,8 @@ app.tableProcessor = function() {
         </table>
       `
       
-      responsePayload.forEach((claim) => {
-        const tr = table.insertRow(1);
+      responsePayload.forEach((claim, ind) => {
+        const tr = table.insertRow(ind+1);
         const td0 = tr.insertCell(0);
         const td1 = tr.insertCell(1);
         const td2 = tr.insertCell(2);
